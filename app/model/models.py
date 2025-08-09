@@ -1,4 +1,6 @@
 import logging
+import os
+
 import torch
 import torch.nn.functional as F
 from app.config.config import HUGGINGFACE_REPO
@@ -12,10 +14,23 @@ from transformers import BertConfig, BertTokenizerFast
 
 class SentimentModel:
     def __init__(self):
-        self.tokenizer = BertTokenizerFast.from_pretrained(HUGGINGFACE_REPO)
+        HF_TOKEN = os.getenv("HF_TOKEN")
 
-        config = BertConfig.from_pretrained(HUGGINGFACE_REPO)
-        self.model = BertForSentimentRegression.from_pretrained(HUGGINGFACE_REPO, config=config)
+        self.tokenizer = BertTokenizerFast.from_pretrained(
+            HUGGINGFACE_REPO,
+            use_auth_token=HF_TOKEN
+        )
+
+        config = BertConfig.from_pretrained(
+            HUGGINGFACE_REPO,
+            use_auth_token=HF_TOKEN
+        )
+
+        self.model = BertForSentimentRegression.from_pretrained(
+            HUGGINGFACE_REPO,
+            config=config,
+            use_auth_token=HF_TOKEN
+        )
         self.model.eval()
 
         self.labels = ["positividad", "negatividad", "neutralidad"]
