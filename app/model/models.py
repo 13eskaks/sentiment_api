@@ -18,18 +18,18 @@ class SentimentModel:
 
         self.tokenizer = BertTokenizerFast.from_pretrained(
             HUGGINGFACE_REPO,
-            use_auth_token=HF_TOKEN
+            token=HF_TOKEN
         )
 
         config = BertConfig.from_pretrained(
             HUGGINGFACE_REPO,
-            use_auth_token=HF_TOKEN
+            token=HF_TOKEN
         )
 
         self.model = BertForSentimentRegression.from_pretrained(
             HUGGINGFACE_REPO,
             config=config,
-            use_auth_token=HF_TOKEN
+            token=HF_TOKEN
         )
         self.model.eval()
 
