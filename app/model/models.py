@@ -16,22 +16,28 @@ class SentimentModel:
     def __init__(self):
         HF_TOKEN = os.getenv("HF_TOKEN")
 
+        logger.info("Starting to load tokenizer...")
         self.tokenizer = BertTokenizerFast.from_pretrained(
             HUGGINGFACE_REPO,
             token=HF_TOKEN
         )
+        logger.info("Tokenizer loaded successfully.")
 
+        logger.info("Starting to load model configuration...")
         config = BertConfig.from_pretrained(
             HUGGINGFACE_REPO,
             token=HF_TOKEN
         )
+        logger.info("Model configuration loaded successfully.")
 
+        logger.info("Starting to load the model...")
         self.model = BertForSentimentRegression.from_pretrained(
             HUGGINGFACE_REPO,
             config=config,
             token=HF_TOKEN
         )
         self.model.eval()
+        logger.info("Model loaded and ready for evaluation.")
 
         self.labels = ["positividad", "negatividad", "neutralidad"]
 

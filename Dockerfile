@@ -5,8 +5,11 @@ FROM python:3.10-slim
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+# Set Hugging Face cache directory to a writable location
+ENV HF_HOME=/tmp/hf_cache
+
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /api
 
 # Copy dependency file first to leverage Docker layer caching
 COPY requirements.txt .
